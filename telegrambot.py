@@ -21,7 +21,7 @@ def handle(msg):
 		bot.sendMessage(chat_id, "Green LED is turned off!")
 		statusLEDs.lightLed("no_warping")
    	elif command == '/help':
-        	bot.sendMessage(chat_id, "/start - Start the Warping Detective /n /stop - Stop the Warping Detective /n /status - Sends status if warping occured /n /warpingLED - Turns on RED LED /n /no_warpingLED - Turns on GREEN LED"
+        	bot.sendMessage(chat_id, "/start - Start the Warping Detective /n /stop - Stop the Warping Detective /n /status - Sends status if warping occured /n /warpingLED - Turns on RED LED /n /no_warpingLED - Turns on GREEN LED")
   	elif command == '/start'
        		bot.sendMessage(chat_id, "Ich mach noch nix")
    	elif command == '/stop'
