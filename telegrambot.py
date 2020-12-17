@@ -37,5 +37,5 @@ bot.sendMessage("1405736760", "Hi I am your personal warping assistent!") #In Te
 bot.sendMessage("1405736760", "I will text you if warping occurs.") #In Telegram
 
 #Diese Methode wird in execute.py aufgerufen, wenn Warping auftritt. 
-def sendMessage():
+def send_Message():
 	bot.sendMessage("1405736760", "Warping erkannt und Drucker abgeschaltet!")
