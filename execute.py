@@ -56,6 +56,8 @@ if __name__ == "__main__":
 				telegrambot.sendMessage()
 				time.sleep(20)
 				Relais.statusDrucker("no_warping")
+			else: 
+				statusLEDs.lightLed("no_warping")
 							
 	except (KeyboardInterrupt, SystemExit): #Programm kann mit Ctrl + C angehalten werden
 		print("Pfiat di Gott! :D")
