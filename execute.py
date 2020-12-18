@@ -8,6 +8,7 @@ import os
 import statusLEDs
 import Relais
 import telegrambot
+import numpy as np
 
 #Code wird nur ausgefuhrt, wenn execute direkt ausgefuehrt wird
 if __name__ == "__main__": 
@@ -21,17 +22,15 @@ if __name__ == "__main__":
 		
 		#Scale Ratio setzen
 		scaleRatio = -1 #Spannungswert fuer Warping initial
-		limit = 10000 #Wert, ab dem Warping erkannt wird
-		averageOfXValues = 10 #Anzahl an Ausgelesenen Werten, die zur Auswertung gemittelt werden
+		limit = 15 #Wert, ab dem Warping erkannt wird
+		averageOfXValues = 20 #Anzahl an Ausgelesenen Werten, die zur Auswertung gemittelt werden
 		hx711.set_scale_ratio(scaleRatio)
 		
 		#Erstelle eine neue csv-datei:
 		date_time = datetime.now().strftime("%y-%m-%d_%H-%M")
-		#path = os.path.dirname(__file__)+"/Data/" + date_time
 		f = open("Data/" + date_time + ".csv", "w+")
 		f_csv_writer = csv.writer(f,delimiter=",")
 		row_index = 0
-
 		print("Values are saved to: " + date_time + ".csv")
 
 		#Gewichte ausgeben, LEDs Relaise ansteuern
@@ -41,16 +40,17 @@ if __name__ == "__main__":
 
 		while True:
 			outputvalue = hx711.get_weight_mean(averageOfXValues)
-			print(outputvalue, "") # Hier "" kann eine Einheit eingefuegt werden
-			
+			force = round(outputvalue+27776.8/186245)*9.81,2)
+			print("Output: " + outputvalue, "\t Force: " + force)
+
 			#Erstelle Inhalt der naechsten Reihe:
 			row_time = datetime.now().strftime("%H/%M/%S")
-			row_content = [row_index, row_time, outputvalue]
+			row_content = [row_index, row_time, outputvalue, force]
 			row_index +=1
 			#Schreibe die naeste Reihe:
 			f_csv_writer.writerow(row_content)
 			
-			if outputvalue>limit:
+			if force>limit:
 				statusLEDs.lightLed("warping")
 				Relais.statusDrucker("warping")
 				telegrambot.sendMessage()
